@@ -9,7 +9,11 @@ class collectd::install inherits collectd {
     if $::osfamily == 'Redhat' {
       package { ['collectd', 'collectd-disk', 'collectd-python']:
         ensure   => $collectd::ensure_signalfx_collectd_version,
-        provider => 'yum'
+        provider => 'yum',
+        install_options => {
+          '--disablerepo' => 'epel*',
+          '--enablerepo'  => 'SignalFx-collectd',
+        },
       }
     }
 }
